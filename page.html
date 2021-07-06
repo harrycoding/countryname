@@ -1,0 +1,41 @@
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.css" />
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script>
+</head>
+<body>
+    <input name="countryname"> <button class='btn'>°e¥X</button>
+    <table id="countrytable">
+        <thead><tr><th>flag</th><th>name</th><th>alpha2Code</th><th>alpha3Code</th><th>nativeName</th><th>callingCodes</th></tr></thead>
+        <tbody></tbody>
+    </table>
+    <script type="text/javascript">
+        $(document).ready(() => {
+            $('.btn').click(() => {
+                const value = $('input[name=countryname]').val();
+                $('#countrytable').find("tbody").empty()
+                $.ajax({
+                    method: 'GET',
+                    url: 'https://restcountries.eu/rest/v2/name/' + value,
+                    success: countries => {
+                        for (let country of countries) {
+                            $('#countrytable').find("tbody").append(
+                                `<tr><td><img src="${country.flag}" style="width:20px;height:20px" /> </td>
+                                        <td> ${country.name} </td><td> ${country.alpha2Code} </td>
+                                         <td> ${country.alpha3Code} </td><td> ${country.nativeName} </td>
+                                        <td> ${country.callingCodes}</td></tr>`
+                            )
+                        }
+                        $('#countrytable').DataTable({});
+                      
+                    },
+                })
+            })
+
+
+
+        })
+    </script>
+</body>
+</html>
